@@ -121,16 +121,23 @@ router.get('/examination/detail/:id', function(req, res, next) {
 
 /* create data in models Topic(database*/
 
+
 router.post('/examination/create', upload.any(),function(req, res, next) {
-    res.send(req.files)
+    //res.send(req.files)
+  
     models.DB_exam.create({
         title: req.body.title_text,
         detail: req.body.detail_text,
-        fileUpload: req.body.myFile,
+        fileUpload: req.files[0].filename
 
     }).then(function() {
         res.redirect('/examination');
     });
+});
+
+/* download in examination board */
+router.post('/downloadfile', upload.any(),function(req, res, next) {
+   res.download(__dirname + "public/uploads")
 });
 
 /* create data in models Comment(database*/
